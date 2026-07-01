@@ -203,7 +203,7 @@
                 </div>
                 <div class="flex justify-between items-center text-2xs text-slate-450 mt-2.5 font-bold uppercase">
                     <span>Min: 20°C</span>
-                    <span>Max: 42°C</span>
+                    <span>Max: 34°C</span>
                 </div>
             </div>
 
@@ -263,12 +263,14 @@
 
         {{-- Status Aktuator Real-time dari ESP8266 --}}
         <div class="mt-8 mb-6 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6">
-            <h2 class="text-sm font-semibold text-slate-700 flex items-center gap-2 mb-5">
+            <h2 class="text-sm font-semibold text-slate-700 flex items-center gap-2 mb-1">
                 <svg class="w-4 h-4 text-emerald-600 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
                 </svg>
                 Status Aktuator Kandang (dari ESP8266)
             </h2>
+            <p class="text-xs text-slate-500 mt-1">Kontrol langsung aktuator kandang secara otomatis</p>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {{-- Kipas --}}
                 <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-150 bg-slate-50/50">
@@ -327,7 +329,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        Panel Kontrol Peralatan
+                        Panel Kontrol
                     </h2>
                     <p class="text-xs text-slate-500 mt-1">Kontrol langsung aktuator kandang secara manual</p>
                 </div>
@@ -350,7 +352,7 @@
             <!-- Kipas Control -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center mb-6 pb-6 border-b border-slate-100">
                 <div class="lg:col-span-2">
-                    <h3 class="text-base font-bold text-gray-800">Kipas Pendingin / Sirkulasi Udara (Fan)</h3>
+                    <h3 class="text-base font-bold text-gray-800">Kipas Pendingin / Sirkulasi Udara</h3>
                     <p class="text-sm text-slate-500 mt-1 leading-relaxed">
                         Aktifkan kipas pendingin secara manual untuk memperlancar sirkulasi udara atau membuang bau amonia yang menyengat sebelum mencapai ambang batas otomatis.
                     </p>
@@ -370,15 +372,15 @@
             <!-- Sprayer Control -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center mb-6 pb-6 border-b border-slate-100">
                 <div class="lg:col-span-2">
-                    <h3 class="text-base font-bold text-gray-800">Penyemprot Cairan Penetral Amonia (Sprayer)</h3>
+                    <h3 class="text-base font-bold text-gray-800">Penyemprot Cairan Penetral Amonia</h3>
                     <p class="text-sm text-slate-500 mt-1 leading-relaxed">
-                        Zat amonia yang tinggi (>25.0 ppm) berbahaya bagi puyuh. Aktifkan penyemprot cairan penetral untuk menurunkan kadar gas secara cepat.
+                        Zat amonia yang tinggi (>15.0 ppm) berbahaya bagi puyuh. Aktifkan penyemprot cairan penetral untuk menurunkan kadar gas secara cepat.
                     </p>
                     <div class="flex items-center gap-2 mt-3 text-2xs font-semibold text-amber-700 bg-amber-50 px-3.5 py-2 rounded-xl border border-amber-200 w-fit">
                         <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
-                        Ambang Batas Keamanan: Suhu &gt;35°C | Amonia &gt;25.0 ppm | Kelembapan &lt;40% atau &gt;80%
+                        Ambang Batas Keamanan: Suhu &gt;35°C | Amonia &gt;15.0 ppm | Kelembapan &lt;40% atau &gt;80%
                     </div>
                 </div>
                 <div class="flex justify-end">
@@ -396,7 +398,7 @@
             <!-- Lampu Pemanas Control -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center pt-2">
                 <div class="lg:col-span-2">
-                    <h3 class="text-base font-bold text-gray-800">Lampu Pemanas (Heater Lamp)</h3>
+                    <h3 class="text-base font-bold text-gray-800">Lampu Pemanas</h3>
                     <p class="text-sm text-slate-500 mt-1 leading-relaxed">
                         Aktifkan lampu pemanas secara manual untuk menghangatkan kandang saat suhu dingin. Lampu menyala otomatis jika suhu di bawah 20°C.
                     </p>
@@ -408,7 +410,7 @@
                         onclick="toggleLampu()"
                         class="w-full sm:w-auto px-6 py-3.5 text-slate-700 font-bold text-sm rounded-xl tracking-wide transition-all shadow-sm active:scale-95 duration-300 bg-slate-100 hover:bg-slate-200 border border-slate-300 focus:outline-none"
                     >
-                        💡 Aktifkan Lampu Manual
+                            💡 Aktifkan Lampu Manual
                     </button>
                 </div>
             </div>
