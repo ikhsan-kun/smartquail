@@ -105,22 +105,12 @@
                 
                 {{-- Right side controls --}}
                 <div class="flex items-center gap-3 flex-shrink-0">
-                    {{-- IoT Status Badge --}}
-                    <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 rounded-xl border border-emerald-200/50">
-                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></div>
-                        <span class="text-emerald-700 text-[10px] sm:text-xs font-semibold hidden sm:inline">Server IoT Aktif</span>
-                        <span class="text-emerald-700 text-[10px] sm:text-xs font-semibold sm:hidden">Online</span>
+                    {{-- ESP8266 Status Badge (Dynamic) --}}
+                    <div id="espStatusBadge" class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200/50 transition-all duration-500">
+                        <div id="espStatusDot" class="w-2 h-2 rounded-full bg-slate-400 transition-all duration-500"></div>
+                        <span id="espStatusTextDesktop" class="text-slate-500 text-[10px] sm:text-xs font-semibold hidden sm:inline transition-colors duration-500">Memeriksa ESP...</span>
+                        <span id="espStatusTextMobile" class="text-slate-500 text-[10px] sm:text-xs font-semibold sm:hidden transition-colors duration-500">...</span>
                     </div>
-                    {{-- Logout Button --}}
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 rounded-xl text-[10px] sm:text-xs font-bold transition-all duration-200 border border-red-200/50 active:scale-95">
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>
-                            <span>Logout</span>
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -132,12 +122,12 @@
     {{-- Main Container --}}
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-grow w-full z-10 relative">
 
-        {{-- Welcome Toast --}}
+        {{-- Welcome Banner (tanpa login) --}}
         <div id="welcomeToast" class="mb-6 bg-gradient-to-r from-emerald-800 to-green-700 rounded-2xl px-5 py-4 text-white shadow-lg border border-emerald-600/30 flex items-center justify-between gap-3 transition-all duration-500 opacity-0 translate-y-2" style="display:none;">
             <div class="flex items-center gap-3.5">
-                <span class="text-2xl animate-bounce">👋</span>
+                <span class="text-2xl animate-bounce">🐦</span>
                 <div>
-                    <p class="text-sm font-bold text-white">Selamat Datang, {{ Auth::user()->name }}!</p>
+                    <p class="text-sm font-bold text-white">SmartQuail Monitoring</p>
                     <p class="text-xs text-slate-100/90 mt-0.5">Sistem IoT Kandang Puyuh siap dipantau.</p>
                 </div>
             </div>
@@ -845,6 +835,30 @@
             }
         }
 
+        // Update ESP8266 Status Indicator in Navbar
+        function updateEspStatus(isOnline) {
+            const badge = document.getElementById('espStatusBadge');
+            const dot = document.getElementById('espStatusDot');
+            const textDesktop = document.getElementById('espStatusTextDesktop');
+            const textMobile = document.getElementById('espStatusTextMobile');
+
+            if (isOnline) {
+                badge.className = 'flex items-center gap-2 px-3 py-1.5 bg-emerald-50 rounded-xl border border-emerald-200/50 transition-all duration-500';
+                dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981] transition-all duration-500';
+                textDesktop.className = 'text-emerald-700 text-[10px] sm:text-xs font-semibold hidden sm:inline transition-colors duration-500';
+                textDesktop.textContent = 'Server IoT Aktif';
+                textMobile.className = 'text-emerald-700 text-[10px] sm:text-xs font-semibold sm:hidden transition-colors duration-500';
+                textMobile.textContent = 'Aktif';
+            } else {
+                badge.className = 'flex items-center gap-2 px-3 py-1.5 bg-red-50 rounded-xl border border-red-200/50 transition-all duration-500';
+                dot.className = 'w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444] transition-all duration-500';
+                textDesktop.className = 'text-red-600 text-[10px] sm:text-xs font-semibold hidden sm:inline transition-colors duration-500';
+                textDesktop.textContent = 'Server IoT Offline';
+                textMobile.className = 'text-red-600 text-[10px] sm:text-xs font-semibold sm:hidden transition-colors duration-500';
+                textMobile.textContent = 'Offline';
+            }
+        }
+
         // Fetch sensor telemetries on load and every 5 seconds
         async function fetchSensorData() {
             try {
@@ -852,8 +866,10 @@
                 if (!response.ok) throw new Error("HTTP Status: " + response.status);
                 const data = await response.json();
                 updateDashboard(data);
+                updateEspStatus(data.esp_online);
             } catch (error) {
                 console.error("Gagal sinkronisasi data sensor:", error);
+                updateEspStatus(false);
             }
         }
 

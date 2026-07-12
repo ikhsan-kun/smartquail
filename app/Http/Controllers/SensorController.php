@@ -31,8 +31,12 @@ public function latest()
             'sprayer_actual' => false,
             'kipas_actual' => false,
             'lampu_actual' => false,
+            'esp_online' => false,
         ]);
     }
+
+    // ✅ Cek apakah ESP8266 masih online (data terakhir < 30 detik)
+    $espOnline = $latest->created_at->diffInSeconds(now()) < 30;
 
     // ✅ FIX: Cek manual log dulu, jika tidak ada gunakan status otomatis dari SensorData
     $latestSprayer = SprayerLog::latest('id')->first();
@@ -64,6 +68,7 @@ public function latest()
         'sprayer_actual' => (bool)$latest->sprayer_active,
         'kipas_actual' => (bool)$latest->kipas_active,
         'lampu_actual' => (bool)$latest->lampu_active,
+        'esp_online' => $espOnline,
     ]);
 }
 
